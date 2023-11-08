@@ -143,7 +143,7 @@ namespace _Main.Scripts.Character.Components
             _bodyMovement.Jump();
         }
 
-        public void Rotate(Vector2 mouseInput)
+        public void Look(Vector2 mouseInput)
         {
             _mouseInput = mouseInput;
         }

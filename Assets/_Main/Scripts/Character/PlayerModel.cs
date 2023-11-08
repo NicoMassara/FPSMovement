@@ -39,9 +39,9 @@ namespace _Main.Scripts.Character
             _movementController.Move(input);
         }
         
-        public void Rotate(Vector2 mouseInput)
+        public void Look(Vector2 mouseInput)
         {
-            _movementController.Rotate(mouseInput);
+            _movementController.Look(mouseInput);
         }
 
         public void Jump()

@@ -4059,6 +4059,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1060773841}
+  - component: {fileID: 1060773848}
   - component: {fileID: 1060773845}
   - component: {fileID: 1060773844}
   - component: {fileID: 1060773846}
@@ -4131,6 +4132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugPanel: {fileID: 354823640}
+  controlSensitivityMultiplier: 10
 --- !u!114 &1060773846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4162,6 +4164,80 @@ MonoBehaviour:
   componentsData: {fileID: 11400000, guid: cb6aea396b1d0e24e900dd427deb0d2d, type: 2}
   mainCamera: {fileID: 963194227}
   groundCheck: {fileID: 2094827409}
+--- !u!114 &1060773848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060773840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a8d6078a648e81a4e93b7d110590e6a2, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1060773845}
+        m_TargetAssemblyTypeName: _Main.Scripts.Character.PlayerController, Assembly-CSharp
+        m_MethodName: OnControlsChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 286e19ff-59d6-4c45-85fc-ef6ab07cb5a3
+    m_ActionName: Movement/AimAxis[/XInputControllerWindows/rightStick,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 291b683e-d2fe-47b2-b007-10068266811f
+    m_ActionName: Movement/MovementAxis[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b9321e2-a9fb-48eb-8b27-baa411454cc7
+    m_ActionName: Movement/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0be081a6-ec60-42a4-8db6-89b136912f9c
+    m_ActionName: Movement/Sprint[/XInputControllerWindows/leftStickPress,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5ab61bb5-53b5-4e4c-aa0d-b6a68a861479
+    m_ActionName: Weapons/Shoot[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d49e273-81fa-4507-a800-74e4e97527f6
+    m_ActionName: Weapons/Aim[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7f14782e-7b99-4a90-8296-002ae7813c7e
+    m_ActionName: Weapons/Reload[/XInputControllerWindows/buttonWest,/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a857e997-a800-4466-b55b-40b992018c4a
+    m_ActionName: Weapons/Cycle[/XInputControllerWindows/leftShoulder,/Keyboard/q]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Movement
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1060809166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 435894390955474615, guid: 23f269877f78b3b488a7b1be32184b3b, type: 3}
