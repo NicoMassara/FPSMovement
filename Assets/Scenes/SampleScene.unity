@@ -4118,9 +4118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f39053f6334a73b13f3d1610099c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentsData: {fileID: 11400000, guid: cb6aea396b1d0e24e900dd427deb0d2d, type: 2}
-  handsSocket: {fileID: 1573235716}
-  weaponsManager: {fileID: 1060773846}
 --- !u!114 &1060773845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4147,9 +4144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCamera: {fileID: 1675051439}
-  bulletSpreadAngle: 0
-  shootPoint: {fileID: 1740165180}
-  bulletPrefab: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
+  componentsData: {fileID: 11400000, guid: cb6aea396b1d0e24e900dd427deb0d2d, type: 2}
+  handsSocket: {fileID: 1573235716}
+  currentWeapon: {fileID: 1785522766}
 --- !u!114 &1060773847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7142,37 +7139,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variable: 0
---- !u!1 &1740165179
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1740165180}
-  m_Layer: 0
-  m_Name: ShootPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1740165180
+--- !u!4 &1740165180 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1740165180, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+  m_PrefabInstance: {fileID: 8247838300535789533}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740165179}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.118, z: 0.218}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 544130192}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771622163
 GameObject:
   m_ObjectHideFlags: 0
@@ -7266,6 +7237,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variable: 1
+--- !u!114 &1785522766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+  m_PrefabInstance: {fileID: 8247838300535789533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcc7b1063e14b7f8322e6db159744b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1838669429
 GameObject:
   m_ObjectHideFlags: 0
@@ -9402,6 +9384,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1573235716}
     m_Modifications:
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: shootDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: shootPoint
+      value: 
+      objectReference: {fileID: 1740165180}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: bulletSpreadAngle
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8247838301069955917, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: m_RootOrder
       value: 0

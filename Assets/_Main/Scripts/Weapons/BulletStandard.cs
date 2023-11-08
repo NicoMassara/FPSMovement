@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _Main.Scripts.Bullet
+namespace _Main.Scripts.Weapons
 {
     public class BulletStandard : BulletBase
     {
@@ -57,17 +57,15 @@ namespace _Main.Scripts.Bullet
             _lastRootPosition = root.position;
             _velocity = base.SelfTransform.forward * data.speed;
             transform.position += base.InheritedMuzzleVelocity * Time.deltaTime;
-
-            var weaponsManager = base.Owner.GetComponent<WeaponsManager>();
-            if (weaponsManager)
+            
+            if (base.CameraTransform)
             {
                 _hasTrajectoryOverride = true;
-
-                var cameraTransform = weaponsManager.WeaponCamera.transform;
-                var cameraToMuzzle = base.InitialPosition - cameraTransform.position;
+                
+                var cameraToMuzzle = base.InitialPosition - CameraTransform.position;
 
                 _trajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
-                    cameraTransform.forward);
+                    CameraTransform.forward);
 
                 if (trajectoryCorrectionDistance == 0)
                 {

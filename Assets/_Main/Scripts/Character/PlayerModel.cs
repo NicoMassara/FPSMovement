@@ -1,5 +1,5 @@
 ﻿using System;
-using _Main.Scripts.Bullet;
+using _Main.Scripts.Weapons;
 using _Main.Scripts.Character.Components;
 using _Main.Scripts.Jetpack;
 using UnityEngine;
@@ -7,30 +7,18 @@ using UnityEngine;
 namespace _Main.Scripts.Character
 {
     [RequireComponent(typeof(MovementController))]
+    [RequireComponent(typeof(WeaponsManager))]
     public class PlayerModel : MonoBehaviour
     {
-        [Header("General Values")] 
-        [SerializeField] private PlayerComponentsData componentsData;
-        [SerializeField] private Transform handsSocket;
-        [SerializeField] private WeaponsManager weaponsManager;
-        
-        private BobMovement _bobMovement;
-        private SwayMovement _swayMovement;
-        private RecoilController _recoilController;
         private MovementController _movementController;
+        private WeaponsManager _weaponsManager;
 
         private Vector3 _startPos;
-        private Vector2 _mouseInput;
-        
-        //WeaponController
-        private bool _isShooting;
         
         private void Awake()
         {
             _movementController = GetComponent<MovementController>();
-            _swayMovement = new SwayMovement(componentsData.swayData);
-            _recoilController = new RecoilController(componentsData.recoilData);
-            _bobMovement = new BobMovement(componentsData.bobData, componentsData.bodyData);
+            _weaponsManager = GetComponent<WeaponsManager>();
         }
 
         private void Start()
@@ -46,16 +34,6 @@ namespace _Main.Scripts.Character
             }
         }
 
-        private void LateUpdate()
-        {
-            var isGrounded = _movementController.GetIsGrounded();
-            var velocity = _movementController.GetVelocity();
-            
-            handsSocket.localRotation = Quaternion.Euler(_swayMovement.Calculate(_mouseInput));
-            handsSocket.localPosition = _bobMovement.CalculateBob(velocity,isGrounded) 
-                                        + _recoilController.Calculate(_isShooting);
-        }
-
         public void Move(Vector2 input)
         {
             _movementController.Move(input);
@@ -63,8 +41,7 @@ namespace _Main.Scripts.Character
         
         public void Rotate(Vector2 mouseInput)
         {
-            _mouseInput = mouseInput;
-            _movementController.Rotate(_mouseInput);
+            _movementController.Rotate(mouseInput);
         }
 
         public void Jump()
@@ -79,12 +56,7 @@ namespace _Main.Scripts.Character
 
         public void Shoot(bool isShooting)
         {
-            _isShooting = isShooting;
-            if (_isShooting)
-            {
-                weaponsManager.Shoot();
-                _movementController.ImpactCamera(Vector3.down);
-            }
+            _weaponsManager.HandleShoot(isShooting);
         }
 
         public void UseJetpack(bool hasPressed, bool isPressed)

@@ -11,7 +11,7 @@ namespace _Main.Scripts.Character.Components
         private float _verticalAngle;
         private float _moveAngle;
 
-        private const float TimeBeforeResetting = 0.01f;
+        private const float TimeBeforeResetting = 0f;
         private float _resetTime;
 
         private Vector3 _impactAngle;
@@ -43,11 +43,12 @@ namespace _Main.Scripts.Character.Components
 
         public void UpdateAngle()
         {
-            if (_impactAngle.magnitude > 0)
+            if (_impactAngle.magnitude > 0 && _resetTime <= 0)
             {
                 _impactAngle = Vector2.Lerp(_impactAngle, Vector2.zero, _data.restitutionTime * Time.deltaTime);
-                _resetTime -= Time.deltaTime;
             }
+            
+            _resetTime -= Time.deltaTime;
         }
 
         public void Impact(Vector3 moveDir)

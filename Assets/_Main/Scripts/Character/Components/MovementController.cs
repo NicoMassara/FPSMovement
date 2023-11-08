@@ -33,7 +33,6 @@ namespace _Main.Scripts.Character.Components
         {
             _characterController = GetComponent<CharacterController>();
             
-            
             _bodyMovement = new BodyMovement(componentsData.bodyData, _characterController,transform,groundCheck);
             _camera = new CameraMovement(componentsData.cameraData, mainCamera);
             _jetpack = new JetpackController(componentsData.jetpackData);
@@ -60,7 +59,7 @@ namespace _Main.Scripts.Character.Components
             
             if (GetIsGrounded() && !_lastFrameGrounded)
             {
-                _camera.Impact(Vector3.up);
+                ImpactCamera(Vector3.right);
             }
             
             _lastFrameGrounded = GetIsGrounded();
@@ -100,6 +99,11 @@ namespace _Main.Scripts.Character.Components
             return _jetpack?.GetCanUse() ?? false;
         }
 
+        public Vector2 GetMouseInput()
+        {
+            return _mouseInput;
+        }
+
         public void ImpactCamera(Vector3 direction)
         {
             _camera.Impact(direction);
@@ -120,7 +124,7 @@ namespace _Main.Scripts.Character.Components
 
             if (_isUsingJetpack && !_lasFrameUsingJetpack)
             {
-                ImpactCamera(Vector3.up);
+                ImpactCamera(Vector3.right);
             }
         }
         

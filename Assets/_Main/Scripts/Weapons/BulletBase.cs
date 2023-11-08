@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace _Main.Scripts.Bullet
+namespace _Main.Scripts.Weapons
 {
     public class BulletBase : MonoBehaviour
     {
@@ -11,12 +11,14 @@ namespace _Main.Scripts.Bullet
         public Vector3 InheritedMuzzleVelocity { get; private set; }
 
         protected Transform SelfTransform { get; set; }
+        protected Transform CameraTransform { get; private set; }
 
         public UnityAction OnShoot;
 
-        public void Shoot(GameObject owner, Vector3 muzzleVelocity)
+        public void Shoot(Transform weaponCamera, GameObject owner, Vector3 muzzleVelocity)
         {
             Owner = owner;
+            CameraTransform = weaponCamera;
             SelfTransform = transform;
             InitialPosition = SelfTransform.position;
             InitialDirection = SelfTransform.forward;

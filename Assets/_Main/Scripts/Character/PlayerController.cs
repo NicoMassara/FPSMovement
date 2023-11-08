@@ -32,7 +32,7 @@ namespace _Main.Scripts.Character
             _model.Move(moveInput);
             _model.Rotate(_blockInput ? Vector2.zero : mouseInput);
             _model.Sprint(Input.GetKey(KeyCode.LeftShift));
-            _model.Shoot(Input.GetKeyDown(KeyCode.Mouse0) && !_blockInput);
+            _model.Shoot(Input.GetKey(KeyCode.Mouse0) && !_blockInput);
             _model.UseJetpack(Input.GetKeyDown(KeyCode.Space),Input.GetKey(KeyCode.Space));
         }
 
