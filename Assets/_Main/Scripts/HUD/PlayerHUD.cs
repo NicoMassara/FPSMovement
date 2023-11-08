@@ -13,6 +13,13 @@ namespace _Main.Scripts.HUD
         [SerializeField] private TMP_Text velocityText;
 
         [SerializeField] private MovementController playerMovement;
+
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+        }
+
         private void Update()
         {
             jetpackFuelBar.fillAmount = playerMovement.GetJetpackFuel();
