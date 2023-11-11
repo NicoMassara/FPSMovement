@@ -14,6 +14,7 @@ namespace _Main.Scripts.Character
         private WeaponsManager _weaponsManager;
 
         private Vector3 _startPos;
+        private float _movementMultiplier = 1;
         
         private void Awake()
         {
@@ -36,7 +37,7 @@ namespace _Main.Scripts.Character
 
         public void Move(Vector2 input)
         {
-            _movementController.Move(input);
+            _movementController.Move(input * _movementMultiplier);
         }
         
         public void Look(Vector2 mouseInput)
@@ -58,11 +59,25 @@ namespace _Main.Scripts.Character
         {
             _weaponsManager.HandleShoot(isShooting);
         }
+        
+        public void Aim(bool isAiming)
+        {
+            var canAim = _weaponsManager.TryAim(isAiming);
+            _movementController.SetFov(FovType.Aim, canAim);
+            _movementMultiplier = canAim ? 0.5f : 1;
+
+        }
+
+        public void Switch()
+        {
+            _weaponsManager.HandleSwitch();
+        }
 
         public void UseJetpack(bool hasPressed, bool isPressed)
         {
             _movementController.UseJetpack(hasPressed,isPressed);
         }
+
 
     }
 }

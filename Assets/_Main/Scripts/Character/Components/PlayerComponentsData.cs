@@ -1,4 +1,5 @@
 ﻿using _Main.Scripts.Jetpack;
+using _Main.Scripts.Weapons;
 using UnityEngine;
 
 namespace _Main.Scripts.Character.Components
@@ -14,6 +15,8 @@ namespace _Main.Scripts.Character.Components
         public SwayData swayData;
         public RecoilData recoilData;
         public JetpackData jetpackData;
+        public WeaponSwitchData weaponSwitchData;
+        public WeaponAimData weaponAimData;
 
 
         public void ResetDefault()

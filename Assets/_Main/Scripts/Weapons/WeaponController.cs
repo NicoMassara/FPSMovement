@@ -12,6 +12,12 @@ namespace _Main.Scripts.Weapons
         [SerializeField] private Transform shootPoint;
         [SerializeField] private BulletStandard bulletPrefab;
         [SerializeField] private float shootDelay = 0.75f;
+        [SerializeField] private Vector3 aimOffset;
+        [SerializeField] private GameObject root;
+        
+        [Header("Crosshair Data")]
+        [SerializeField] public CrossHairData defaultCrosshair;
+        [SerializeField] public CrossHairData aimCrosshair;
         
         private float _lastShootTime;
         private bool _isShooting;
@@ -20,6 +26,8 @@ namespace _Main.Scripts.Weapons
         private Vector3 _lastMuzzlePosition;
         
         public GameObject Owner { get; set; }
+        public bool IsWeaponActive { get; private set; }
+        public Vector3 AimOffset => aimOffset;
 
         public UnityAction OnShoot;
 
@@ -31,6 +39,13 @@ namespace _Main.Scripts.Weapons
                 _muzzleVelocity = (position - _lastMuzzlePosition) / Time.deltaTime;
                 _lastMuzzlePosition = position;
             }
+        }
+
+        public void ShowWeapon(bool show)
+        {
+            root.SetActive(show);
+            
+            IsWeaponActive = show;
         }
 
         public bool TryShoot(Transform cameraTransform)
@@ -62,5 +77,13 @@ namespace _Main.Scripts.Weapons
             
             return spreadWorldDir;
         }
+    }
+
+    [Serializable]
+    public struct CrossHairData
+    {
+        public Sprite Sprite;
+        public int Size;
+        public Color Color;
     }
 }

@@ -35,6 +35,7 @@ namespace _Main.Scripts.Character
         private void Start()
         {
             _movementActions.Jump.performed += _ => _model.Jump();
+            _weaponsActions.Cycle.performed += _ => _model.Switch();
         }
 
         private void Update()
@@ -48,6 +49,7 @@ namespace _Main.Scripts.Character
             _model.Look(_blockInput ? Vector2.zero : mouseInput);
             _model.Sprint(_movementActions.Sprint.IsPressed());
             _model.Shoot(_weaponsActions.Shoot.IsPressed() && !_blockInput);
+            _model.Aim(_weaponsActions.Aim.IsPressed() && !_blockInput);
             _model.UseJetpack(_movementActions.Jump.WasPressedThisFrame(),_movementActions.Jump.IsPressed());
         }
 

@@ -9,8 +9,8 @@ namespace _Main.Scripts.Character.Components
     {
         [SerializeField] private PlayerComponentsData componentsData;
         [SerializeField] private Camera mainCamera;
+        [SerializeField] private Camera weaponCamera;
         [SerializeField] private Transform groundCheck;
-        
         
         //Movement
         private BodyMovement _bodyMovement;
@@ -28,13 +28,12 @@ namespace _Main.Scripts.Character.Components
         private bool _canUseJetpack;
         private bool _lasFrameUsingJetpack;
 
-
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
             
             _bodyMovement = new BodyMovement(componentsData.bodyData, _characterController,transform,groundCheck);
-            _camera = new CameraMovement(componentsData.cameraData, mainCamera);
+            _camera = new CameraMovement(componentsData.cameraData, mainCamera, weaponCamera);
             _jetpack = new JetpackController(componentsData.jetpackData);
         }
 
@@ -47,7 +46,6 @@ namespace _Main.Scripts.Character.Components
         {
             LateUpdateCamera();
         }
-
 
         private void UpdateMovement()
         {
@@ -68,11 +66,14 @@ namespace _Main.Scripts.Character.Components
 
         private void LateUpdateCamera()
         {
-            _camera.SetFov(GetIsSprinting());
+            SetFov(FovType.Sprint, GetIsSprinting());
             _camera.UpdateAngle();
-            _camera.Rotate(_mouseInput.y, _bodyMovement.GetRotationSpeed()/10);
-            _bodyMovement.Rotate(_mouseInput.x);
+            //Don't know why I had to divided by 100 and 10, but it keeps sensitivity pretty good
+            _camera.Rotate(_mouseInput.y, _bodyMovement.GetRotationSpeed()/100);
+            _bodyMovement.Rotate(_mouseInput.x/10);
         }
+
+        #region Get Values
 
         public bool GetIsGrounded()
         {
@@ -104,10 +105,9 @@ namespace _Main.Scripts.Character.Components
             return _mouseInput;
         }
 
-        public void ImpactCamera(Vector3 direction)
-        {
-            _camera.Impact(direction);
-        }
+        #endregion
+
+        #region Actions
 
         public void UseJetpack(bool hasPressed, bool isPressed)
         {
@@ -147,5 +147,23 @@ namespace _Main.Scripts.Character.Components
         {
             _mouseInput = mouseInput;
         }
+        
+
+        #endregion
+
+        #region Camera Modifiers
+
+        public void ImpactCamera(Vector3 direction, float multiplier = 1)
+        {
+            _camera.Impact(direction * multiplier);
+        }
+
+        public void SetFov(FovType fovType, bool input)
+        {
+            _camera.SetFov(fovType, input);
+        }
+
+        #endregion
+        
     }
 }

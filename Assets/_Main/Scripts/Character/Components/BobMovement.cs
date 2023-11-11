@@ -18,7 +18,7 @@ namespace _Main.Scripts.Character.Components
             _bodyData = bodyData;
         }
 
-        public Vector3 CalculateBob(Vector3 velocity, bool canBob, bool toggleBobAmount = false)
+        public Vector3 CalculateBob(Vector3 velocity, bool canBob, bool isAiming = false)
         {
             if (!(Time.deltaTime > 0f)) return Vector3.zero;
 
@@ -35,7 +35,7 @@ namespace _Main.Scripts.Character.Components
                 Mathf.Lerp(_bobFactor, playerMovementFactor, _data.bobSharpness * Time.deltaTime);
 
             //Divided by 100 so can use bigger numbers in instructor.
-            var bobAmount = (toggleBobAmount ? _data.alternativeBobAmount : _data.defaultBobAmount)/100; 
+            var bobAmount = (isAiming ? _data.alternativeBobAmount : _data.defaultBobAmount)/100; 
             var frequency = _data.bobFrequency;
             var hBobValue = Mathf.Sin(Time.time * frequency) * bobAmount * _bobFactor;
             var vBobValue = ((Mathf.Sin(Time.time * frequency * 2f) * 0.5f) + 0.5f) * bobAmount *
