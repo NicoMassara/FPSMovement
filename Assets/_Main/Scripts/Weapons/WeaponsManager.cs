@@ -60,6 +60,7 @@ namespace _Main.Scripts.Weapons
             currentWeapon.OnShoot += OnShootHandler;
             currentWeapon.Owner = gameObject;
             _switchController.OnSwitched += OnSwitchedHandler;
+            _switchController.OnSwitched += OnWeaponSwitched;
         }
 
         private void Update()
@@ -116,7 +117,6 @@ namespace _Main.Scripts.Weapons
             if (_isAiming) return;
             
             _switchController.SwitchWeapon(false);
-            OnWeaponSwitched?.Invoke(currentWeapon);
         }
 
         private Vector3 GetAimOffset()
@@ -136,8 +136,10 @@ namespace _Main.Scripts.Weapons
         
         private void OnSwitchedHandler(WeaponController newWeapon)
         {
+            currentWeapon.OnShoot -= OnShootHandler;
             _hasActiveWeapon = currentWeapon;
             currentWeapon = newWeapon;
+            currentWeapon.OnShoot += OnShootHandler;
         }
     }
 }

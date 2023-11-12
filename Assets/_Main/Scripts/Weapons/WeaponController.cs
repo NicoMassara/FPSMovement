@@ -18,6 +18,7 @@ namespace _Main.Scripts.Weapons
         [Header("Crosshair Data")]
         [SerializeField] public CrossHairData defaultCrosshair;
         [SerializeField] public CrossHairData aimCrosshair;
+        [SerializeField] public CrossHairData walkCrosshair;
         
         private float _lastShootTime;
         private bool _isShooting;
@@ -82,8 +83,8 @@ namespace _Main.Scripts.Weapons
     [Serializable]
     public struct CrossHairData
     {
-        public Sprite Sprite;
-        public int Size;
-        public Color Color;
+        public Sprite sprite;
+        public float size;
+        public Color color;
     }
 }

@@ -90,6 +90,13 @@ namespace _Main.Scripts.Character.Components
             return _bodyMovement?.CharacterVelocity ?? Vector3.zero;
         }
 
+        public bool GetIsMoving()
+        {
+            var flatVel = GetVelocity();
+            flatVel.y = 0;
+            return flatVel.magnitude > 0.1f;
+        }
+
         public float GetJetpackFuel()
         {
             return _jetpack?.CurrentFillRatio ?? 0;

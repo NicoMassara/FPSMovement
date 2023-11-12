@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b540264f99e90174da2ef6eb815d8b2e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4532691bcfd43224d92b23c4f9af061a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7586,8 +7586,116 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.size
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: bulletSpreadAngle
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.size
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 87ec69f7fe6c4f640ad70a3c66e8bc94, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 87ec69f7fe6c4f640ad70a3c66e8bc94, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.b
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.g
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.b
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.g
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.r
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 87ec69f7fe6c4f640ad70a3c66e8bc94, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Size
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.r
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 87ec69f7fe6c4f640ad70a3c66e8bc94, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 87ec69f7fe6c4f640ad70a3c66e8bc94, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.b
+      value: 0.13616946
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.g
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.r
+      value: 0.24534173
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.g
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.r
+      value: 0.08739797
       objectReference: {fileID: 0}
     - target: {fileID: 893359991513994183, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8209,7 +8317,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bd4dec2aacf83bc469e4d2fbd001b644, type: 2}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: shootDelay
-      value: 0.25
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: shootPoint
@@ -8217,15 +8325,123 @@ PrefabInstance:
       objectReference: {fileID: 1880162391}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: bulletCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.size
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: bulletSpreadAngle
-      value: 7.5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.size
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d26b456c04f30f1499db7cc97737ee55, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d26b456c04f30f1499db7cc97737ee55, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.b
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.g
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.b
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.g
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.r
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d26b456c04f30f1499db7cc97737ee55, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Size
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.r
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d26b456c04f30f1499db7cc97737ee55, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d26b456c04f30f1499db7cc97737ee55, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.b
+      value: 0.13616946
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.g
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.r
+      value: 0.24534173
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.g
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.r
+      value: 0.08739797
       objectReference: {fileID: 0}
     - target: {fileID: 893359991513994183, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8670,8 +8886,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshairImage: {fileID: 34638948}
-  crosshairUpdateSharpness: 15
+  nullCrosshairSprite: {fileID: 21300000, guid: 4532691bcfd43224d92b23c4f9af061a, type: 3}
+  crosshairUpdateSharpness: 10
   weaponsManager: {fileID: 1060773846}
+  movementController: {fileID: 1060773847}
 --- !u!1 &1905593056
 GameObject:
   m_ObjectHideFlags: 0
@@ -10186,8 +10404,116 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
     - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.size
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: bulletSpreadAngle
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.size
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbd06109e7d8ef54a8232b5cade48d84, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbd06109e7d8ef54a8232b5cade48d84, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.b
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.g
+      value: 0.14542542
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.Color.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.b
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.g
+      value: 0.054957267
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: aimCrosshair.color.r
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbd06109e7d8ef54a8232b5cade48d84, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Size
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.size
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: walkCrosshair.color.r
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbd06109e7d8ef54a8232b5cade48d84, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbd06109e7d8ef54a8232b5cade48d84, type: 3}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.b
+      value: 0.13616946
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.g
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.Color.r
+      value: 0.24534173
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.g
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 627176725725272596, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
+      propertyPath: defaultCrosshair.color.r
+      value: 0.08739797
       objectReference: {fileID: 0}
     - target: {fileID: 8247838301069955917, guid: 1ac4d10d0b868d34891507dff0ec1321, type: 3}
       propertyPath: m_RootOrder

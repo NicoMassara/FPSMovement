@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Main.Scripts.Character.Components
 {
@@ -13,7 +14,7 @@ namespace _Main.Scripts.Character.Components
         private float _verticalAngle;
         private float _moveAngle;
 
-        private const float TimeBeforeResetting = 0f;
+        private const float TimeBeforeResetting = 0.075f;
         private float _resetTime;
 
         private Vector3 _impactAngle;
@@ -81,8 +82,8 @@ namespace _Main.Scripts.Character.Components
 
         public void Impact(Vector3 moveDir)
         {
-            _impactAngle = moveDir * _data.moveAngle;
-            _resetTime = TimeBeforeResetting;
+            _impactAngle += moveDir * _data.moveAngle;
+            _resetTime = Random.Range(TimeBeforeResetting, TimeBeforeResetting * 2);
         }
     }
 

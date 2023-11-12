@@ -1,4 +1,5 @@
 ﻿using System;
+using _Main.Scripts.Character.Components;
 using _Main.Scripts.Weapons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,14 +9,15 @@ namespace _Main.Scripts.HUD
     public class CrosshairController : MonoBehaviour
     {
         [SerializeField] private Image crosshairImage;
+        [SerializeField] private Sprite nullCrosshairSprite;
         [SerializeField] private float crosshairUpdateSharpness = 5f;
         [SerializeField] private WeaponsManager weaponsManager;
+        [SerializeField] private MovementController movementController;
 
+        private bool _isPointingAtEnemy, _isMoving;
         private bool _wasPointingAtEnemy;
+        private CrossHairData _currentData, _defaultData, _aimData;
         private RectTransform _crossHairRectTransform;
-        private CrossHairData _currentData;
-        private CrossHairData _defaultData;
-        private CrossHairData _aimData;
 
         private void Awake()
         {
@@ -29,42 +31,61 @@ namespace _Main.Scripts.HUD
 
         private void Update()
         {
-            UpdateCrossHairPointingAtEnemy();
-            _wasPointingAtEnemy = weaponsManager.IsPointingAtEnemy;
+            _isPointingAtEnemy = weaponsManager.IsPointingAtEnemy;
+            _isMoving = movementController.GetIsMoving();
+
+            UpdateCrosshair();
+
+            _wasPointingAtEnemy = _isPointingAtEnemy;
         }
         
-        private void UpdateCrossHairPointingAtEnemy(bool force = false)
+        private void UpdateCrosshair(bool force = false)
         {
-            var isPointingAtEnemy = weaponsManager.IsPointingAtEnemy;
+            if(_defaultData.sprite == null) return;
 
-            if ((force || !_wasPointingAtEnemy) && isPointingAtEnemy)
+            if ((force || !_wasPointingAtEnemy) && _isPointingAtEnemy)
             {
                 _currentData = _aimData;
-                _crossHairRectTransform.sizeDelta = _currentData.Size * Vector2.one;
+                crosshairImage.sprite = _currentData.sprite;
             }
-            else if ((force || _wasPointingAtEnemy) && !isPointingAtEnemy)
+            else if ((force || _wasPointingAtEnemy) 
+                     && (!_isPointingAtEnemy))
             {
                 _currentData = _defaultData;
-                _crossHairRectTransform.sizeDelta = _currentData.Size * Vector2.one;
+                crosshairImage.sprite = _currentData.sprite;
             }
             
-            crosshairImage.color = Color.Lerp(crosshairImage.color, _currentData.Color,
+            crosshairImage.color = Color.Lerp(crosshairImage.color, _currentData.color,
                 Time.deltaTime * crosshairUpdateSharpness);
             
-            _crossHairRectTransform.sizeDelta = Mathf.Lerp(_crossHairRectTransform.sizeDelta.x, _currentData.Size,
+            _crossHairRectTransform.sizeDelta = Mathf.Lerp(_crossHairRectTransform.sizeDelta.x, _currentData.size,
                 Time.deltaTime * crosshairUpdateSharpness) * Vector2.one;
         }
         
+
         private void OnWeaponSwitchedHandler(WeaponController weapon)
         {
-            if(!weapon) return;
+            if (weapon)
+            {
+                crosshairImage.enabled = true;
+                _currentData = weapon.defaultCrosshair;
+                _defaultData = weapon.defaultCrosshair;
+                _aimData = weapon.aimCrosshair;
+                _crossHairRectTransform = crosshairImage.GetComponent<RectTransform>();
+            }
+            else
+            {
+                if (nullCrosshairSprite)
+                {
+                    crosshairImage.sprite = nullCrosshairSprite;
+                }
+                else
+                {
+                    crosshairImage.enabled = false;
+                }
+            }
             
-            _currentData = weapon.defaultCrosshair;
-            _defaultData = weapon.defaultCrosshair;
-            _aimData = weapon.aimCrosshair;
-            _crossHairRectTransform = crosshairImage.GetComponent<RectTransform>();
-
-            UpdateCrossHairPointingAtEnemy(true);
+            UpdateCrosshair(true);
         }
     }
 }
