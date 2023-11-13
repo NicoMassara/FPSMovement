@@ -1,7 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Audio;
 
 namespace _Main.Scripts.Sounds
 {
@@ -9,11 +9,22 @@ namespace _Main.Scripts.Sounds
     {
         public static SoundManager Singleton =>  _instance != null ? _instance : (_instance = CreateInstance());
         private static SoundManager _instance;
+        
+        private readonly List<SourceData> _locationSources = new List<SourceData>();
+        private readonly List<SourceData> _loopableSources = new List<SourceData>();
+        
+        private class SourceData
+        {
+            public int id;
+            public readonly AudioSource source;
 
-        private AudioSource _dynamicAudioSource;
-        private AudioSource _stoppableAudioSource;
-        private bool _hasDynamic;
-        private bool _hasStoppable;
+            public SourceData(int id, AudioSource source)
+            {
+                this.id = id;
+                this.source = source;
+            }
+        }
+        
         private static SoundManager CreateInstance()
         {
             var gameObject = new GameObject(nameof(SoundManager))
@@ -22,28 +33,10 @@ namespace _Main.Scripts.Sounds
             return gameObject.AddComponent<SoundManager>();
         }
         
-        private void PlayAudioSource(AudioSource source,SoundClassSo soundClass)
+        // ReSharper disable Unity.PerformanceAnalysis
+        private AudioSource CreateAudioSource(Transform parent)
         {
-            var sourceData = soundClass.SourceData;
-            
-            source.outputAudioMixerGroup = sourceData.mixerGroup;
-            source.loop = sourceData.loop;
-            source.bypassEffects = sourceData.ignoreEffects;
-            source.bypassListenerEffects = sourceData.ignoreListenerEffects;
-            source.bypassReverbZones = sourceData.ignoreReverbZones;
-            source.volume = sourceData.volume;
-            source.pitch = sourceData.pitch;
-            source.priority = sourceData.priority;
-            source.panStereo = sourceData.stereoPan;
-            source.spatialBlend = sourceData.spatialBlend;
-            
-            source.PlayOneShot(soundClass.GetAudioClip());
-        }
-        
-        
-        private AudioSource CreateAudioSource(string objectName, Transform parent)
-        {
-            var newAudioSource = new GameObject($"{objectName} Sound")
+            var newGameObject = new GameObject("Audio Source")
             { 
                 hideFlags = HideFlags.DontSave,
                 transform =
@@ -52,42 +45,72 @@ namespace _Main.Scripts.Sounds
                     localPosition = Vector3.zero
                 }
             };
-            return newAudioSource.AddComponent<AudioSource>();
+            
+            var newAudioSource = newGameObject.AddComponent<AudioSource>();
+            newAudioSource.playOnAwake = false;
+            return newAudioSource;
+        }
+            
+        private void PlayAudioSource(AudioSource audioSource,SoundClassSo soundClass)
+        {
+            var sourceData = soundClass.SourceData;
+
+            audioSource.clip = soundClass.GetAudioClip();
+            audioSource.outputAudioMixerGroup = sourceData.mixerGroup;
+            audioSource.loop = sourceData.loop;
+            audioSource.bypassEffects = sourceData.ignoreEffects;
+            audioSource.bypassListenerEffects = sourceData.ignoreListenerEffects;
+            audioSource.bypassReverbZones = sourceData.ignoreReverbZones;
+            audioSource.volume = sourceData.volume;
+            audioSource.pitch = sourceData.pitch;
+            audioSource.priority = sourceData.priority;
+            audioSource.panStereo = sourceData.stereoPan;
+            audioSource.spatialBlend = sourceData.spatialBlend;
+            
+            audioSource.Play();
         }
 
-        public void PlaySoundAtLocation(SoundClassSo soundClass, Vector3 position)
+        private AudioSource GetSourceData(int uniqueId, List<SourceData> sourceArray, Transform parent)
         {
-            if (!_hasDynamic)
+            var count = sourceArray.Count - 1;
+            if (count > -1)
             {
-                _dynamicAudioSource = CreateAudioSource("Dynamic", transform);
-                _hasDynamic = true;
-            }
-
-            _dynamicAudioSource.transform.position = position;
-            PlayAudioSource(_dynamicAudioSource,soundClass);
-        }
-
-        public void PlayStoppableSoundAtLocation(SoundClassSo soundClass, Transform parent)
-        {
-            if (!_hasStoppable)
-            {
-                _stoppableAudioSource = CreateAudioSource(soundClass.ClassName, parent);
-                _hasStoppable = true;
+                for (int i = 0; i < count; i++)
+                {
+                    var item = sourceArray[i];
+                    if(item == null) continue;
+                    if(item.source.isPlaying) continue;
+                    item.id = uniqueId;
+                    
+                    return item.source;
+                }
             }
             
-            PlayAudioSource(_stoppableAudioSource,soundClass);
+            var newAudioSource = CreateAudioSource(parent);
+            sourceArray.Add(new SourceData(uniqueId, newAudioSource));
+            
+            return newAudioSource;
+        }
+        
+        public void PlaySoundAtLocation(SoundClassSo soundClass, Vector3 position)
+        {
+            var audioSource = GetSourceData(-1, _locationSources, transform);
+            audioSource.transform.position = position;
+            PlayAudioSource(audioSource, soundClass);
         }
 
-        public void StopSound()
+        public void PlayLoopableSound(int uniqueId, SoundClassSo soundClass, Transform parent)
         {
-            // ReSharper disable once Unity.NoNullPropagation
-            _stoppableAudioSource?.Stop();
+            var audioSource = GetSourceData(uniqueId, _loopableSources, parent);
+            PlayAudioSource(audioSource, soundClass);
         }
 
-        public void PlayStaticSound(SoundClassSo soundClass, Transform owner)
+        public void StopLoopableSound(int uniqueId)
         {
-            var newAudioSource = CreateAudioSource(soundClass.ClassName, owner);
-            PlayAudioSource(newAudioSource,soundClass);
+            foreach (var sourceData in _loopableSources.Where(sourceData => sourceData.id == uniqueId))
+            {
+                sourceData.source.Stop();
+            }
         }
     }
 }

@@ -22,14 +22,12 @@ namespace _Main.Scripts.Character
         {
             _movementController = GetComponent<MovementController>();
             _weaponsManager = GetComponent<WeaponsManager>();
-            
-
         }
 
         private void Start()
         {
             _startPos = transform.position;
-            SoundManager.Singleton.PlayStaticSound(backgroundSound, Camera.main.transform);
+            SoundManager.Singleton.PlayLoopableSound(SoundsID.Background, backgroundSound, Camera.main.transform);
         }
         
         private void Update()

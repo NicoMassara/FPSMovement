@@ -32,6 +32,10 @@ namespace _Main.Scripts.Character
         private bool _isUsingJetpack;
         private bool _canUseJetpack;
         private bool _lasFrameUsingJetpack;
+        
+        //Sounds Values
+        private SoundManager _soundManager;
+        private const int JetpackSoundId = 20;
 
         public PlayerComponentsDataSo ComponentsData => componentsData;
 
@@ -48,6 +52,8 @@ namespace _Main.Scripts.Character
 
             _jetpack.OnStarted += Jetpack_OnStartedHandler;
             _jetpack.OnStopped += Jetpack_OnStoppedHandler;
+            
+            _soundManager = SoundManager.Singleton;
         }
 
         private void Update()
@@ -62,8 +68,7 @@ namespace _Main.Scripts.Character
 
         private void UpdateMovement()
         {
-            _bodyMovement.CheckGround();
-            _bodyMovement.HandleMovement();
+            _bodyMovement.UpdateBody();
             _jetpackAcceleration = _jetpack.CalculateAcceleration
                 (_bodyMovement.CharacterVelocity,_isUsingJetpack).y;
             _bodyMovement.AddYAcceleration(_jetpackAcceleration);
@@ -190,24 +195,28 @@ namespace _Main.Scripts.Character
         }
 
         #endregion
-        
+
+        #region Event Handlers
+
         private void OnSprintHandler()
         {
-            SoundManager.Singleton.PlaySoundAtLocation(sprintSound,transform.position);
+            _soundManager.PlaySoundAtLocation(sprintSound,transform.position);
         }
 
         private void OnLandHandler()
         {
-            SoundManager.Singleton.PlaySoundAtLocation(landSound,transform.position);
+            _soundManager.PlaySoundAtLocation(landSound,transform.position);
         }
         private void Jetpack_OnStartedHandler()
         {
-            SoundManager.Singleton.PlayStoppableSoundAtLocation(jetpackSound,transform);
+            _soundManager.PlayLoopableSound(SoundsID.PlayerJetpack, jetpackSound, transform);
         }
         
         private void Jetpack_OnStoppedHandler()
         {
-            SoundManager.Singleton.StopSound();
+            _soundManager.StopLoopableSound(SoundsID.PlayerJetpack);
         }
+
+        #endregion
     }
 }

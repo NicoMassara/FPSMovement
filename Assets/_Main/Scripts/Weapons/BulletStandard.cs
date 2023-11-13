@@ -19,6 +19,7 @@ namespace _Main.Scripts.Weapons
         private void Awake()
         {
             base.OnShoot += OnShootHandler;
+            Destroy(gameObject, 3f);
         }
 
         private void Update()

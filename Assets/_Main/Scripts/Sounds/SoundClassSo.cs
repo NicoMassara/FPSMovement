@@ -11,7 +11,7 @@ namespace _Main.Scripts.Sounds
         [SerializeField] private string className = "SoundClass";
         [SerializeField] private AudioClip[] clips;
         [SerializeField] private AudioSourceData sourceData;
-
+        
         public AudioSourceData SourceData => sourceData;
         public string ClassName => className;
 

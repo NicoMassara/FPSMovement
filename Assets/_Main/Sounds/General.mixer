@@ -69,7 +69,9 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 3aefce883e668c842ba8ab7a89b99eac
   m_FloatValues:
-    c9c717ee49fd5204a8aaba815e8f6397: 0
+    cbe41a48edd7e0a499d36108b0f67c96: 0
+    220b731efdcff8947b92d02828db0a90: 0
+    c9c717ee49fd5204a8aaba815e8f6397: -0.16685188
   m_TransitionOverrides: {}
 --- !u!243 &5184525896010364910
 AudioMixerGroupController:
@@ -92,7 +94,7 @@ AudioMixerGroupController:
   m_BypassEffects: 0
 --- !u!244 &6240421510161119134
 AudioMixerEffectController:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

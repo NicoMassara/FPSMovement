@@ -12,13 +12,15 @@ namespace _Main.Scripts.Character.Components
         private readonly Transform _player;
         private readonly float _gravity;
 
+        private readonly Transform _groundCheck;
         private float _rotationAngle;
         private Vector3 _worldSpaceMoveInput = Vector3.zero;
         private bool _hasJumped;
         private float _verticalVelocity;
-        private readonly Transform _groundCheck;
         private bool _wasSprinting;
         private bool _wasOnGround;
+        private const float CanSprintAgainDelay = 0.5f;
+        private float _lastSprintTime;
 
         public Vector3 CharacterVelocity { get; set; }
         public bool IsSprinting { get; private set; }
@@ -35,20 +37,28 @@ namespace _Main.Scripts.Character.Components
             _controller.enableOverlapRecovery = true;
             _gravity = Physics.gravity.y;
             _groundCheck = groundCheck;
+            _wasOnGround = true;
         }
 
-        public void CheckGround()
+        public void UpdateBody()
         {
-            _wasOnGround = IsGrounded;
-            IsGrounded = Physics.CheckSphere(_groundCheck.position, 0.2f, _data.whatIsGround);
-
+            CheckGround();
+            HandleMovement();
+            
             if (!_wasOnGround && IsGrounded)
             {
                 OnLand?.Invoke();
             }
+
+            _wasOnGround = IsGrounded;
         }
 
-        public void HandleMovement()
+        private void CheckGround()
+        {
+            IsGrounded = Physics.CheckSphere(_groundCheck.position, 0.2f, _data.whatIsGround);
+        }
+
+        private void HandleMovement()
         {
             _player.Rotate(_rotationAngle * Vector3.up, Space.Self);
             
@@ -107,7 +117,8 @@ namespace _Main.Scripts.Character.Components
             
             _wasSprinting = IsSprinting;
             
-            if (flatVel.magnitude > 0.1f)
+            
+            if (flatVel.magnitude > 0.1f && GetCanSprintAgain())
             {
                 this.IsSprinting = isSprinting;
             }
@@ -115,16 +126,22 @@ namespace _Main.Scripts.Character.Components
             {
                 this.IsSprinting = false;
             }
-
+            
             if (!_wasSprinting && IsSprinting)
             {
                 OnSprint?.Invoke();
+                _lastSprintTime = Time.time;
             }
         }
 
         public float GetMaxPossibleSpeed()
         {
             return (IsGrounded ? _data.maxGroundSpeed : _data.maxAirSpeed) * _data.sprintSpeedModifier;
+        }
+        
+        private bool GetCanSprintAgain()
+        {
+            return Time.time - _lastSprintTime >= CanSprintAgainDelay;
         }
     }
 
