@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _Main.Scripts.Jetpack
 {
@@ -7,8 +8,13 @@ namespace _Main.Scripts.Jetpack
     {
         private readonly JetpackData _data;
         private float _lastTimeOfUse;
-        private float _gravityDownforce;
+        private readonly float _gravityDownforce;
+        private bool _wasUsing;
+        
         public float CurrentFillRatio { get; private set; }
+
+        public UnityAction OnStarted;
+        public UnityAction OnStopped;
 
         public JetpackController(JetpackData data)
         {
@@ -42,7 +48,17 @@ namespace _Main.Scripts.Jetpack
             }
             
             CurrentFillRatio = Mathf.Clamp01(CurrentFillRatio);
-            
+
+            if (_wasUsing && !isUsing)
+            {
+                OnStopped?.Invoke();
+            }
+            else if (!_wasUsing && isUsing)
+            {
+                OnStarted?.Invoke();
+            }
+
+            _wasUsing = isUsing;
             return accelerationVector;
         }
 

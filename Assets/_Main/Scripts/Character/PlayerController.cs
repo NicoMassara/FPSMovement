@@ -11,20 +11,22 @@ namespace _Main.Scripts.Character
     [RequireComponent(typeof(PlayerModel))]
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private GameObject debugPanel;
-        [Range(1,50)][SerializeField] private float controlSensitivityMultiplier = 15;
+        [SerializeField] [Range(1,10)]
+        private float mouseSensitivity = 5;
+        [SerializeField] [Range(1,10)]
+        private int gamepadSensitivity = 5;
         
         private PlayerModel _model;
         private PlayerControls.MovementActions _movementActions;
         private PlayerControls.WeaponsActions _weaponsActions;
-        private bool _blockInput;
+
+        private float _currentSensitivity;
 
         private bool _isGamepad;
         
         private void Awake()
         {
             _model = GetComponent<PlayerModel>();
-            debugPanel.SetActive(false);
             
             var playerControls = new PlayerControls();
             playerControls.Enable();
@@ -42,30 +44,22 @@ namespace _Main.Scripts.Character
         {
             var mouseInput = _movementActions.AimAxis.ReadValue<Vector2>();
             var moveInput = _movementActions.MovementAxis.ReadValue<Vector2>();
-
-            mouseInput = _isGamepad ? mouseInput * controlSensitivityMultiplier : mouseInput;
             
             _model.Move(moveInput);
-            _model.Look(_blockInput ? Vector2.zero : mouseInput);
+            _model.Look(mouseInput*_currentSensitivity);
             _model.Sprint(_movementActions.Sprint.IsPressed());
-            _model.Shoot(_weaponsActions.Shoot.IsPressed() && !_blockInput);
-            _model.Aim(_weaponsActions.Aim.IsPressed() && !_blockInput);
+            _model.Shoot(_weaponsActions.Shoot.IsPressed());
+            _model.Aim(_weaponsActions.Aim.IsPressed());
             _model.UseJetpack(_movementActions.Jump.WasPressedThisFrame(),_movementActions.Jump.IsPressed());
-        }
-
-        private void LateUpdate()
-        {
-            if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
-            {
-                _blockInput = !_blockInput;
-                
-                debugPanel.SetActive(_blockInput);
-            }
         }
 
         public void OnControlsChanged(PlayerInput input)
         {
             _isGamepad = input.currentControlScheme.Equals("Gamepad");
+            
+            //It's divided by 50 and 2 cause it makes easier to control and set sensitivity
+            _currentSensitivity = _isGamepad ? 
+                (float)gamepadSensitivity / 2 : mouseSensitivity / 50;
         }
     }
 }

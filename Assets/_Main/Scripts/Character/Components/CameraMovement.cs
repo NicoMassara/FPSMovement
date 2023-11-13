@@ -28,9 +28,9 @@ namespace _Main.Scripts.Character.Components
             _weaponCameraTransform = _weaponCamera.transform;
         }
 
-        public void Rotate(float vAxis, float rotationSpeed)
+        public void Rotate(float vAxis)
         {
-            _verticalAngle += -vAxis * rotationSpeed;
+            _verticalAngle += -vAxis;
             _verticalAngle = Mathf.Clamp(_verticalAngle, -89f, 89);
             _cameraTransform.transform.localEulerAngles = _impactAngle + (Vector3.right * _verticalAngle);
         }
@@ -82,7 +82,7 @@ namespace _Main.Scripts.Character.Components
 
         public void Impact(Vector3 moveDir)
         {
-            _impactAngle += moveDir * _data.moveAngle;
+            _impactAngle += moveDir;
             _resetTime = Random.Range(TimeBeforeResetting, TimeBeforeResetting * 2);
         }
     }
@@ -92,17 +92,8 @@ namespace _Main.Scripts.Character.Components
     {
         [Range(40,110)] public float startFov = 60f;
         [Range(60,130)] public float sprintFov = 70f;
-        [Range(30,100)] public float aimFov = 50f;
-        [Range(1, 35)] public float moveAngle = 15f;
         [Range(1,50)] public float transitionTime = 15f;
         [Range(1,50)] public float restitutionTime = 25f;
-    }
-
-    public class CameraFovData
-    {
-        public float fovMultiplier = 1;
-        public float transitionTime = 15f;
-        public float restitutionTime = 15f;
     }
 
     public enum FovType

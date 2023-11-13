@@ -1,16 +1,18 @@
 ﻿using System;
-using _Main.Scripts.Character.Components;
+using _Main.Scripts.Character;
+using _Main.Scripts.Sounds;
+using _Main.Scripts.Weapons.Components;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 namespace _Main.Scripts.Weapons
 {
     public class WeaponsManager : MonoBehaviour
     {
-        [Header("General Values")]
+        [Header("General Values")] 
+        [SerializeField] private SoundClassSo weaponSwitchSound;
         [SerializeField] private Camera weaponCamera;
-        [SerializeField] private PlayerComponentsData componentsData;
+        [SerializeField] private WeaponHandsDataSo handsData;
         [SerializeField] private Transform handsSocket;
         [SerializeField] private LayerMask whatIsEnemy;
         [SerializeField] private WeaponController currentWeapon;
@@ -21,9 +23,8 @@ namespace _Main.Scripts.Weapons
         [SerializeField] private Transform downPosition;
         [SerializeField] private Transform aimPosition;
 
-        private BobMovement _bobMovement;
-        private SwayMovement _swayMovement;
-        private RecoilController _recoilController;
+        private WeaponBobMovement _weaponBobMovement;
+        private WeaponSwayMovement _weaponSwayMovement;
         private WeaponSwitchController _switchController;
         private WeaponAimController _aimController;
 
@@ -45,12 +46,11 @@ namespace _Main.Scripts.Weapons
         {
             _movementController = GetComponent<MovementController>();
             
-            _swayMovement = new SwayMovement(componentsData.swayData);
-            _recoilController = new RecoilController(componentsData.recoilData);
-            _bobMovement = new BobMovement(componentsData.bobData, componentsData.bodyData);
-            _switchController = new WeaponSwitchController(
-                componentsData.weaponSwitchData, weaponSlots, defaultPosition, downPosition);
-            _aimController = new WeaponAimController(componentsData.weaponAimData, aimPosition,defaultPosition);
+            _weaponSwayMovement = new WeaponSwayMovement(handsData.SwayData);
+            _weaponBobMovement = new WeaponBobMovement(handsData.BobData);
+            _switchController = new WeaponSwitchController(handsData.SwitchDelay, 
+                weaponSlots, defaultPosition, downPosition);
+            _aimController = new WeaponAimController(handsData.AimSpeed, aimPosition,defaultPosition);
             
             _hasActiveWeapon = _switchController.GetActiveWeapon();
         }
@@ -60,7 +60,6 @@ namespace _Main.Scripts.Weapons
             currentWeapon.OnShoot += OnShootHandler;
             currentWeapon.Owner = gameObject;
             _switchController.OnSwitched += OnSwitchedHandler;
-            _switchController.OnSwitched += OnWeaponSwitched;
         }
 
         private void Update()
@@ -82,17 +81,17 @@ namespace _Main.Scripts.Weapons
             var isGrounded = _movementController.GetIsGrounded();
             var velocity = _movementController.GetVelocity();
             var mouseInput = _movementController.GetMouseInput();
+            var maxSpeed = _movementController.GetMaxPossibleSpeed();
 
-            var aimMovement = _aimController.CalculatePosition(_isAiming, GetAimOffset());
-            var bobMovement = _bobMovement.CalculateBob(velocity, isGrounded,_isAiming);
-            var recoilMovement = _recoilController.Calculate(_isShooting);
+            var aimMovement = _aimController.CalculatePosition(_isAiming, currentWeapon.GetAimOffset());
+            var bobMovement = _weaponBobMovement.CalculateBob(velocity,maxSpeed, isGrounded,_isAiming);
+            var recoilMovement = currentWeapon.GetRecoilMovement(_isShooting);
             var switchMovement = _switchController.CalculateSwitchMovement();
             
-            handsSocket.localRotation = Quaternion.Euler(_swayMovement.Calculate(mouseInput));
+            handsSocket.localRotation = Quaternion.Euler(_weaponSwayMovement.Calculate(mouseInput));
             handsSocket.localPosition = bobMovement + recoilMovement + switchMovement + aimMovement;
         }
-
-    
+        
 
         public void HandleShoot(bool isShooting)
         {
@@ -117,11 +116,7 @@ namespace _Main.Scripts.Weapons
             if (_isAiming) return;
             
             _switchController.SwitchWeapon(false);
-        }
-
-        private Vector3 GetAimOffset()
-        {
-            return currentWeapon ? currentWeapon.AimOffset : Vector3.zero;
+            SoundManager.Singleton.PlaySoundAtLocation(weaponSwitchSound, transform.position);
         }
         
         public WeaponController GetCurrentWeapon()
@@ -131,7 +126,7 @@ namespace _Main.Scripts.Weapons
 
         private void OnShootHandler()
         {
-            _movementController.ImpactCamera(Vector3.left);
+            _movementController.ImpactCamera(Vector3.left, currentWeapon.GetRecoilCameraForce());
         }
         
         private void OnSwitchedHandler(WeaponController newWeapon)
@@ -140,6 +135,7 @@ namespace _Main.Scripts.Weapons
             _hasActiveWeapon = currentWeapon;
             currentWeapon = newWeapon;
             currentWeapon.OnShoot += OnShootHandler;
+            OnWeaponSwitched?.Invoke(currentWeapon);
         }
     }
 }

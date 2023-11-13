@@ -1,4 +1,5 @@
 ﻿using System;
+using _Main.Scripts.Character;
 using _Main.Scripts.Character.Components;
 using _Main.Scripts.Weapons;
 using UnityEngine;
@@ -12,15 +13,18 @@ namespace _Main.Scripts.HUD
         [SerializeField] private Sprite nullCrosshairSprite;
         [SerializeField] private float crosshairUpdateSharpness = 5f;
         [SerializeField] private WeaponsManager weaponsManager;
-        [SerializeField] private MovementController movementController;
 
-        private bool _isPointingAtEnemy, _isMoving;
+        private bool _isPointingAtEnemy;
         private bool _wasPointingAtEnemy;
-        private CrossHairData _currentData, _defaultData, _aimData;
+        private WeaponCrosshairData _crosshairData;
+        private float _currentSize;
+        private Color _currentColor;
         private RectTransform _crossHairRectTransform;
 
         private void Awake()
         {
+            _crossHairRectTransform = crosshairImage.GetComponent<RectTransform>();
+            
             weaponsManager.OnWeaponSwitched += OnWeaponSwitchedHandler;
         }
 
@@ -32,7 +36,6 @@ namespace _Main.Scripts.HUD
         private void Update()
         {
             _isPointingAtEnemy = weaponsManager.IsPointingAtEnemy;
-            _isMoving = movementController.GetIsMoving();
 
             UpdateCrosshair();
 
@@ -41,24 +44,24 @@ namespace _Main.Scripts.HUD
         
         private void UpdateCrosshair(bool force = false)
         {
-            if(_defaultData.sprite == null) return;
+            if(_crosshairData.sprite == null) return;
 
             if ((force || !_wasPointingAtEnemy) && _isPointingAtEnemy)
             {
-                _currentData = _aimData;
-                crosshairImage.sprite = _currentData.sprite;
+                _currentSize = _crosshairData.aimSize;
+                _currentColor = _crosshairData.aimColor;
             }
             else if ((force || _wasPointingAtEnemy) 
                      && (!_isPointingAtEnemy))
             {
-                _currentData = _defaultData;
-                crosshairImage.sprite = _currentData.sprite;
+                _currentSize = _crosshairData.defaultSize;
+                _currentColor = _crosshairData.defaultColor;
             }
             
-            crosshairImage.color = Color.Lerp(crosshairImage.color, _currentData.color,
+            crosshairImage.color = Color.Lerp(crosshairImage.color, _currentColor,
                 Time.deltaTime * crosshairUpdateSharpness);
             
-            _crossHairRectTransform.sizeDelta = Mathf.Lerp(_crossHairRectTransform.sizeDelta.x, _currentData.size,
+            _crossHairRectTransform.sizeDelta = Mathf.Lerp(_crossHairRectTransform.sizeDelta.x, _currentSize,
                 Time.deltaTime * crosshairUpdateSharpness) * Vector2.one;
         }
         
@@ -68,10 +71,10 @@ namespace _Main.Scripts.HUD
             if (weapon)
             {
                 crosshairImage.enabled = true;
-                _currentData = weapon.defaultCrosshair;
-                _defaultData = weapon.defaultCrosshair;
-                _aimData = weapon.aimCrosshair;
-                _crossHairRectTransform = crosshairImage.GetComponent<RectTransform>();
+                _crosshairData = weapon.WeaponData.CrosshairData;
+                _currentSize = _crosshairData.defaultSize;
+                _currentColor = _crosshairData.defaultColor;
+                crosshairImage.sprite = _crosshairData.sprite;
             }
             else
             {

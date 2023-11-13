@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _Main.Scripts.Character.Components
 {
@@ -11,15 +12,20 @@ namespace _Main.Scripts.Character.Components
         private readonly Transform _player;
         private readonly float _gravity;
 
-        private Vector3 _rotationAxis = Vector3.zero;
+        private float _rotationAngle;
         private Vector3 _worldSpaceMoveInput = Vector3.zero;
         private bool _hasJumped;
-        private float _velocityY;
+        private float _verticalVelocity;
         private readonly Transform _groundCheck;
+        private bool _wasSprinting;
+        private bool _wasOnGround;
 
         public Vector3 CharacterVelocity { get; set; }
         public bool IsSprinting { get; private set; }
         public bool IsGrounded { get; private set; }
+
+        public UnityAction OnSprint;
+        public UnityAction OnLand;
 
         public BodyMovement(BodyMovementData data, CharacterController controller, Transform transform, Transform groundCheck)
         {
@@ -31,20 +37,20 @@ namespace _Main.Scripts.Character.Components
             _groundCheck = groundCheck;
         }
 
-        public void UpdateBody()
-        {
-            CheckGround();
-            HandleMovement();
-        }
-
         public void CheckGround()
         {
+            _wasOnGround = IsGrounded;
             IsGrounded = Physics.CheckSphere(_groundCheck.position, 0.2f, _data.whatIsGround);
+
+            if (!_wasOnGround && IsGrounded)
+            {
+                OnLand?.Invoke();
+            }
         }
 
         public void HandleMovement()
         {
-            _player.Rotate(_rotationAxis, Space.Self);
+            _player.Rotate(_rotationAngle * Vector3.up, Space.Self);
             
             var speedModifier = IsSprinting ? _data.sprintSpeedModifier : 1f;
 
@@ -59,8 +65,8 @@ namespace _Main.Scripts.Character.Components
                 targetVelocity = _worldSpaceMoveInput * (_data.maxAirSpeed);
             }
             
-            _velocityY += _gravity * 2f * Time.deltaTime;
-            targetVelocity.y = _velocityY;
+            _verticalVelocity += _gravity * 2f * Time.deltaTime;
+            targetVelocity.y = _verticalVelocity;
 
             CharacterVelocity = targetVelocity;
             
@@ -68,7 +74,7 @@ namespace _Main.Scripts.Character.Components
 
             if (IsGrounded! && CharacterVelocity.y < -1f)
             {
-                _velocityY = -8f;
+                _verticalVelocity = -8f;
             }
         }
 
@@ -79,25 +85,27 @@ namespace _Main.Scripts.Character.Components
 
         public void Rotate(float hAxis)
         {
-            _rotationAxis.y = hAxis * _data.rotationSpeed/10;
+            _rotationAngle = hAxis;
         }
 
         public void Jump()
         {
             if(!IsGrounded) return;
 
-            _velocityY += Mathf.Sqrt((_data.jumpForce * 10) * -2f * _gravity);
+            _verticalVelocity += Mathf.Sqrt((_data.jumpForce * 10) * -2f * _gravity);
         }
 
         public void AddYAcceleration(float acceleration)
         {
-            _velocityY += acceleration;
+            _verticalVelocity += acceleration;
         }
 
         public void SetSprinting(bool isSprinting)
         {
             var flatVel = CharacterVelocity;
             flatVel.y = 0;
+            
+            _wasSprinting = IsSprinting;
             
             if (flatVel.magnitude > 0.1f)
             {
@@ -107,11 +115,16 @@ namespace _Main.Scripts.Character.Components
             {
                 this.IsSprinting = false;
             }
+
+            if (!_wasSprinting && IsSprinting)
+            {
+                OnSprint?.Invoke();
+            }
         }
 
-        public float GetRotationSpeed()
+        public float GetMaxPossibleSpeed()
         {
-            return _data.rotationSpeed;
+            return (IsGrounded ? _data.maxGroundSpeed : _data.maxAirSpeed) * _data.sprintSpeedModifier;
         }
     }
 
@@ -121,13 +134,10 @@ namespace _Main.Scripts.Character.Components
         [Header("General")] 
         public LayerMask whatIsGround;
         [Header("Movement")]
-        [Range(1f,100f)] public float maxGroundSpeed = 10f;
-        [Range(1f,100f)] public float maxAirSpeed = 8f;
-        [Range(1f,10f)] public float sprintSpeedModifier = 2f;
+        [Range(1f,20f)] public float maxGroundSpeed = 10f;
+        [Range(1f,20f)] public float maxAirSpeed = 8f;
+        [Range(1f,5f)] public float sprintSpeedModifier = 2f;
         [Header("Jump")]
         [Range(1f,50f)]public float jumpForce = 10f;
-        [Space]
-        [Header("Rotation")]
-        [Range(1,100)]public float rotationSpeed = 20f;
     }
 }

@@ -20,37 +20,15 @@ MonoBehaviour:
     maxAirSpeed: 8
     sprintSpeedModifier: 2
     jumpForce: 10
-    rotationSpeed: 20
   cameraData:
     startFov: 60
     sprintFov: 70
-    aimFov: 60
-    moveAngle: 15
     transitionTime: 15
     restitutionTime: 25
-  bobData:
-    bobSharpness: 10
-    bobFrequency: 10
-    defaultBobAmount: 5
-    alternativeBobAmount: 1
-  swayData:
-    amount: 10
-    smoothDamp: 5
-    resetSmoothing: 5
-    clampX: 5
-    clampY: 5
-  recoilData:
-    force: 1
-    maxDistance: 5
-    sharpness: 50
-    restitutionSharpness: 10
   jetpackData:
     acceleration: 25
     consumeDuration: 1
     refillDuration: 2
     downwardVelocityCancelingFactor: 1
     refillDelay: 1
-  weaponSwitchData:
-    switchDelay: 0.3
-  weaponAimData:
-    aimSpeed: 15
+  cameraForceAtGroundImpact: 15

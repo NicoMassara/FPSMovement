@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252213f12cff4925af5c81e2943735c6, type: 3}
+  m_Name: BackgroundSound
+  m_EditorClassIdentifier: 
+  className: Background
+  clips:
+  - {fileID: 8300000, guid: bf2afb0292e1abd43af193fafafe0be8, type: 3}
+  sourceData:
+    mixerGroup: {fileID: 7963786932801285974, guid: 8b8890aca5ade7749950da227e5e5b67, type: 2}
+    priority: 128
+    volume: 0.5
+    pitch: 1

@@ -2,6 +2,7 @@
 using _Main.Scripts.Weapons;
 using _Main.Scripts.Character.Components;
 using _Main.Scripts.Jetpack;
+using _Main.Scripts.Sounds;
 using UnityEngine;
 
 namespace _Main.Scripts.Character
@@ -10,6 +11,7 @@ namespace _Main.Scripts.Character
     [RequireComponent(typeof(WeaponsManager))]
     public class PlayerModel : MonoBehaviour
     {
+        [SerializeField] private SoundClassSo backgroundSound;
         private MovementController _movementController;
         private WeaponsManager _weaponsManager;
 
@@ -20,11 +22,14 @@ namespace _Main.Scripts.Character
         {
             _movementController = GetComponent<MovementController>();
             _weaponsManager = GetComponent<WeaponsManager>();
+            
+
         }
 
         private void Start()
         {
             _startPos = transform.position;
+            SoundManager.Singleton.PlayStaticSound(backgroundSound, Camera.main.transform);
         }
         
         private void Update()
@@ -40,9 +45,9 @@ namespace _Main.Scripts.Character
             _movementController.Move(input * _movementMultiplier);
         }
         
-        public void Look(Vector2 mouseInput)
+        public void Look(Vector2 lookInput)
         {
-            _movementController.Look(mouseInput);
+            _movementController.Look(lookInput);
         }
 
         public void Jump()
