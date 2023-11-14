@@ -78,9 +78,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: cddbc663d7944b145afa4ea72412e767, type: 2}
-  shootPoint: {fileID: 718185034390598964}
+  muzzle: {fileID: 0}
   bulletPrefab: {fileID: 4058725455864719668, guid: c31c56c783312254cb7a41c330aa54d4, type: 3}
   root: {fileID: 8899592559223928410}
+  muzzleFlashPrefab: {fileID: 406003640663925016, guid: f01edbb0648b58147b3f2cdee85f28ea, type: 3}
 --- !u!1001 &8899592559733779263
 PrefabInstance:
   m_ObjectHideFlags: 0

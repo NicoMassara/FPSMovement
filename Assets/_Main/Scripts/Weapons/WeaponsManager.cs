@@ -41,6 +41,7 @@ namespace _Main.Scripts.Weapons
         public bool IsPointingAtEnemy { get; private set; }
 
         public UnityAction<WeaponController> OnWeaponSwitched;
+        public UnityAction<bool> OnChangeAim;
 
         private void Awake()
         {
@@ -107,6 +108,7 @@ namespace _Main.Scripts.Weapons
             if (!_switchController.GetCanUse()) return false;
 
             _isAiming = isAiming;
+            OnChangeAim?.Invoke(_isAiming);
             
             return _isAiming;
         }

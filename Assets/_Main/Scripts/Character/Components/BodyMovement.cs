@@ -21,6 +21,8 @@ namespace _Main.Scripts.Character.Components
         private bool _wasOnGround;
         private const float CanSprintAgainDelay = 0.5f;
         private float _lastSprintTime;
+        private const float CanJumpAgainDelay = 0.5f;
+        private float _lastGroundedTime;
 
         public Vector3 CharacterVelocity { get; set; }
         public bool IsSprinting { get; private set; }
@@ -47,6 +49,7 @@ namespace _Main.Scripts.Character.Components
             
             if (!_wasOnGround && IsGrounded)
             {
+                _lastGroundedTime = Time.time;
                 OnLand?.Invoke();
             }
 
@@ -100,9 +103,10 @@ namespace _Main.Scripts.Character.Components
 
         public void Jump()
         {
-            if(!IsGrounded) return;
-
-            _verticalVelocity += Mathf.Sqrt((_data.jumpForce * 10) * -2f * _gravity);
+            if (IsGrounded && GetCanJumpAgain())
+            {
+                _verticalVelocity += Mathf.Sqrt((_data.jumpForce * 10) * -2f * _gravity);
+            }
         }
 
         public void AddYAcceleration(float acceleration)
@@ -143,6 +147,11 @@ namespace _Main.Scripts.Character.Components
         {
             return Time.time - _lastSprintTime >= CanSprintAgainDelay;
         }
+
+        private bool GetCanJumpAgain()
+        {
+            return Time.time - _lastGroundedTime >= CanJumpAgainDelay;
+        }
     }
 
     [Serializable]
@@ -155,6 +164,6 @@ namespace _Main.Scripts.Character.Components
         [Range(1f,20f)] public float maxAirSpeed = 8f;
         [Range(1f,5f)] public float sprintSpeedModifier = 2f;
         [Header("Jump")]
-        [Range(1f,50f)]public float jumpForce = 10f;
+        [Range(1f,10f)]public float jumpForce = 10f;
     }
 }

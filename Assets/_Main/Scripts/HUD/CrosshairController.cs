@@ -14,6 +14,7 @@ namespace _Main.Scripts.HUD
         [SerializeField] private float crosshairUpdateSharpness = 5f;
         [SerializeField] private WeaponsManager weaponsManager;
 
+        private bool _isCrossHairEnable;
         private bool _isPointingAtEnemy;
         private bool _wasPointingAtEnemy;
         private WeaponCrosshairData _crosshairData;
@@ -26,6 +27,7 @@ namespace _Main.Scripts.HUD
             _crossHairRectTransform = crosshairImage.GetComponent<RectTransform>();
             
             weaponsManager.OnWeaponSwitched += OnWeaponSwitchedHandler;
+            weaponsManager.OnChangeAim += OnChangeAimHandler;
         }
 
         private void Start()
@@ -46,6 +48,15 @@ namespace _Main.Scripts.HUD
         {
             if(_crosshairData.sprite == null) return;
 
+            if (!_isCrossHairEnable)
+            {
+                crosshairImage.color = Color.Lerp(crosshairImage.color, Color.clear, 
+                    Time.deltaTime * crosshairUpdateSharpness);
+                
+                return;
+            }
+
+
             if ((force || !_wasPointingAtEnemy) && _isPointingAtEnemy)
             {
                 _currentSize = _crosshairData.aimSize;
@@ -64,7 +75,7 @@ namespace _Main.Scripts.HUD
             _crossHairRectTransform.sizeDelta = Mathf.Lerp(_crossHairRectTransform.sizeDelta.x, _currentSize,
                 Time.deltaTime * crosshairUpdateSharpness) * Vector2.one;
         }
-        
+
 
         private void OnWeaponSwitchedHandler(WeaponController weapon)
         {
@@ -89,6 +100,11 @@ namespace _Main.Scripts.HUD
             }
             
             UpdateCrosshair(true);
+        }
+        
+        private void OnChangeAimHandler(bool isAiming)
+        {
+            _isCrossHairEnable = !isAiming;
         }
     }
 }

@@ -11,10 +11,13 @@ namespace _Main.Scripts.Weapons
     {
         [Header("General Values")]
         [SerializeField] private WeaponDataSo weaponData;
-        [SerializeField] private Transform shootPoint;
+        [SerializeField] private Transform muzzle;
         [SerializeField] private BulletStandard bulletPrefab;
         [SerializeField] private GameObject root;
+        [SerializeField] private GameObject muzzleFlashPrefab;
 
+        private bool _hasMuzzleFlash;
+        
         private WeaponShootData _shootData;
         private WeaponRecoilController _recoilController;
         
@@ -29,7 +32,7 @@ namespace _Main.Scripts.Weapons
         public bool IsWeaponActive { get; private set; }
         public GameObject Owner { get; set; }
         public WeaponDataSo WeaponData => weaponData;
-
+        
         public UnityAction OnShoot;
 
         private void Awake()
@@ -39,16 +42,27 @@ namespace _Main.Scripts.Weapons
             _recoilController = new WeaponRecoilController(WeaponData.RecoilData);
 
             _soundManager = SoundManager.Singleton;
+            _hasMuzzleFlash = muzzleFlashPrefab;
         }
+        
 
         private void Update()
         {
             if (Time.deltaTime > 0)
             {
-                var position = shootPoint.position;
+                var position = muzzle.position;
                 _muzzleVelocity = (position - _lastMuzzlePosition) / Time.deltaTime;
+                _muzzleVelocity = new Vector3(0, _muzzleVelocity.y, 0);
                 _lastMuzzlePosition = position;
             }
+        }
+
+        private void ShowMuzzleFlash()
+        {
+            if(!_hasMuzzleFlash) return;
+            
+            var muzzleFlashInstance = Instantiate(muzzleFlashPrefab, muzzle.position, muzzle.rotation, muzzle.transform);
+            Destroy(muzzleFlashInstance, 0.15f);
         }
 
         public void ShowWeapon(bool show)
@@ -68,9 +82,9 @@ namespace _Main.Scripts.Weapons
 
             for (int i = 0; i < _shootData.bulletCount; i++)
             {
-                shootDirection = GetShootDirectionWithinSpread(shootPoint);
+                shootDirection = GetShootDirectionWithinSpread(muzzle);
                 var newBullet = Instantiate(
-                    bulletPrefab, shootPoint.position, Quaternion.LookRotation(shootDirection));
+                    bulletPrefab, muzzle.position, Quaternion.LookRotation(shootDirection));
                 newBullet.Shoot(cameraTransform, Owner,_muzzleVelocity);
             }
             
@@ -105,7 +119,8 @@ namespace _Main.Scripts.Weapons
         
         private void OnShootHandler()
         {
-            SoundManager.Singleton.PlaySoundAtLocation(WeaponData.SoundClass,shootPoint.position);
+            _soundManager.PlaySoundAtLocation(WeaponData.SoundClass,muzzle.position);
+            ShowMuzzleFlash();
         }
 
     }

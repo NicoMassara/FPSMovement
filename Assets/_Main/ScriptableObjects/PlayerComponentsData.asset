@@ -19,7 +19,7 @@ MonoBehaviour:
     maxGroundSpeed: 10
     maxAirSpeed: 8
     sprintSpeedModifier: 2
-    jumpForce: 10
+    jumpForce: 5
   cameraData:
     startFov: 60
     sprintFov: 70

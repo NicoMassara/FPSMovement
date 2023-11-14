@@ -35,9 +35,6 @@ namespace _Main.Scripts.Character
         
         //Sounds Values
         private SoundManager _soundManager;
-        private const int JetpackSoundId = 20;
-
-        public PlayerComponentsDataSo ComponentsData => componentsData;
 
         private void Awake()
         {
