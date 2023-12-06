@@ -15,7 +15,6 @@ namespace _Main.Scripts.Character
         [SerializeField] private PlayerComponentsDataSo componentsData;
         [SerializeField] private Camera mainCamera;
         [SerializeField] private Camera weaponCamera;
-        [SerializeField] private Transform groundCheck;
         
         //Movement
         private BodyMovement _bodyMovement;
@@ -40,7 +39,7 @@ namespace _Main.Scripts.Character
         {
             _characterController = GetComponent<CharacterController>();
             
-            _bodyMovement = new BodyMovement(componentsData.BodyData, _characterController,transform,groundCheck);
+            _bodyMovement = new BodyMovement(componentsData.BodyData, _characterController, transform);
             _camera = new CameraMovement(componentsData.CameraData, mainCamera, weaponCamera);
             _jetpack = new JetpackController(componentsData.JetpackData);
 
@@ -66,9 +65,9 @@ namespace _Main.Scripts.Character
         private void UpdateMovement()
         {
             _bodyMovement.UpdateBody();
-            _jetpackAcceleration = _jetpack.CalculateAcceleration
-                (_bodyMovement.CharacterVelocity,_isUsingJetpack).y;
-            _bodyMovement.AddYAcceleration(_jetpackAcceleration);
+            _jetpackAcceleration = _jetpack.CalculateAcceleration(
+                _bodyMovement.CharacterVelocity, _isUsingJetpack);
+            _bodyMovement.AddVerticalAcceleration(_jetpackAcceleration);
             
             if (GetIsGrounded() && !_lastFrameGrounded)
             {

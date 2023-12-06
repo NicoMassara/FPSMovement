@@ -55,8 +55,6 @@ namespace _Main.Scripts.HUD
                 
                 return;
             }
-
-
             if ((force || !_wasPointingAtEnemy) && _isPointingAtEnemy)
             {
                 _currentSize = _crosshairData.aimSize;

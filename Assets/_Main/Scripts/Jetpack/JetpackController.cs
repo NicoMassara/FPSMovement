@@ -10,6 +10,7 @@ namespace _Main.Scripts.Jetpack
         private float _lastTimeOfUse;
         private readonly float _gravityDownforce;
         private bool _wasUsing;
+        private bool _isUsing;
         
         public float CurrentFillRatio { get; private set; }
 
@@ -23,25 +24,30 @@ namespace _Main.Scripts.Jetpack
             CurrentFillRatio = 1;
         }
 
-        public Vector3 CalculateAcceleration(Vector3 bodyVelocity, bool isUsing)
+        public float CalculateAcceleration(Vector3 bodyVelocity, bool isUsing)
         {
             var accelerationVector = Vector3.zero;
 
             if (isUsing)
             {
                 _lastTimeOfUse = Time.time;
+
+                float totalAcceleration = _data.acceleration;
                 
-                float totalAcceleration = _data.acceleration + _gravityDownforce;
+                //Cancel out gravity
+                totalAcceleration += Physics.gravity.y * -1;
 
                 if (bodyVelocity.y < 0f)
                 {
-                    totalAcceleration += (-bodyVelocity.y / Time.deltaTime) * _data.downwardVelocityCancelingFactor;
+                    totalAcceleration += (-bodyVelocity.y / Time.deltaTime) * 
+                                         _data.downwardVelocityCancelingFactor;
                 }
                 
-                CurrentFillRatio -= Time.deltaTime / _data.consumeDuration;
                 accelerationVector = Vector3.up * (totalAcceleration * Time.deltaTime);
+                
+                CurrentFillRatio -= Time.deltaTime / _data.consumeDuration;
             }
-            else if(Time.time - _lastTimeOfUse >= _data.refillDelay)
+            else if(GetCanRefill() && DoesNeedRefill())
             {
                 var refillRate = 1 / _data.refillDuration;
                 CurrentFillRatio += Time.deltaTime * refillRate;
@@ -59,12 +65,22 @@ namespace _Main.Scripts.Jetpack
             }
 
             _wasUsing = isUsing;
-            return accelerationVector;
+            return accelerationVector.y;
         }
-
+        
         public bool GetCanUse()
         {
             return CurrentFillRatio > 0;
+        }
+
+        private bool GetCanRefill()
+        {
+            return Time.time - _lastTimeOfUse >= _data.refillDelay;
+        }
+
+        private bool DoesNeedRefill()
+        {
+            return CurrentFillRatio < 1;
         }
     }
 

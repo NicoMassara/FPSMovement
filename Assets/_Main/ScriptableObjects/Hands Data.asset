@@ -19,9 +19,9 @@ MonoBehaviour:
     alternativeBobAmount: 2
   swayData:
     amount: 10
-    smoothDamp: 1
-    resetSmoothing: 1
-    clampX: 1
-    clampY: 1
+    smoothDamp: 3.33
+    resetSmoothing: 3.58
+    clampX: 7.15
+    clampY: 4.67
   switchDelay: 0.5
   aimSpeed: 10
