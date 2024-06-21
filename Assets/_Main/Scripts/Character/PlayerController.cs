@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace _Main.Scripts.Character
@@ -10,40 +11,55 @@ namespace _Main.Scripts.Character
     [RequireComponent(typeof(PlayerModel))]
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private GameObject debugPanel;
+        [SerializeField] [Range(1,10)]
+        private float mouseSensitivity = 5;
+        [SerializeField] [Range(1,10)]
+        private int gamepadSensitivity = 5;
         
         private PlayerModel _model;
-        private bool _blockInput;
+        private PlayerControls.MovementActions _movementActions;
+        private PlayerControls.WeaponsActions _weaponsActions;
+
+        private float _currentSensitivity;
+
+        private bool _isGamepad;
         
         private void Awake()
         {
             _model = GetComponent<PlayerModel>();
-            debugPanel.SetActive(false);
+            
+            var playerControls = new PlayerControls();
+            playerControls.Enable();
+            _movementActions = playerControls.Movement;
+            _weaponsActions = playerControls.Weapons;
+        }
+
+        private void Start()
+        {
+            _movementActions.Jump.performed += _ => _model.Jump();
+            _weaponsActions.Cycle.performed += _ => _model.Switch();
         }
 
         private void Update()
         {
-            var mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-            var moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            moveInput = Vector2.ClampMagnitude(moveInput, 1);
-            
-            if(Input.GetKeyDown(KeyCode.Space)) _model.Jump();
+            var mouseInput = _movementActions.AimAxis.ReadValue<Vector2>();
+            var moveInput = _movementActions.MovementAxis.ReadValue<Vector2>();
             
             _model.Move(moveInput);
-            _model.Rotate(_blockInput ? Vector2.zero : mouseInput);
-            _model.Sprint(Input.GetKey(KeyCode.LeftShift));
-            _model.Shoot(Input.GetKeyDown(KeyCode.Mouse0) && !_blockInput);
-            _model.UseJetpack(Input.GetKeyDown(KeyCode.Space),Input.GetKey(KeyCode.Space));
+            _model.Look(mouseInput*_currentSensitivity);
+            _model.Sprint(_movementActions.Sprint.IsPressed());
+            _model.Shoot(_weaponsActions.Shoot.IsPressed());
+            _model.Aim(_weaponsActions.Aim.IsPressed());
+            _model.UseJetpack(_movementActions.Jump.WasPressedThisFrame(),_movementActions.Jump.IsPressed());
         }
 
-        private void LateUpdate()
+        public void OnControlsChanged(PlayerInput input)
         {
-            if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
-            {
-                _blockInput = !_blockInput;
-                
-                debugPanel.SetActive(_blockInput);
-            }
+            _isGamepad = input.currentControlScheme.Equals("Gamepad");
+            
+            //It's divided by 50 and 2 cause it makes easier to control and set sensitivity
+            _currentSensitivity = _isGamepad ? 
+                (float)gamepadSensitivity / 2 : mouseSensitivity / 50;
         }
     }
 }

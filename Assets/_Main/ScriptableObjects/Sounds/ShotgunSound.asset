@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252213f12cff4925af5c81e2943735c6, type: 3}
+  m_Name: ShotgunSound
+  m_EditorClassIdentifier: 
+  className: SoundClass
+  clips:
+  - {fileID: 8300000, guid: 108c9226c23815a4db25540ab2a202b1, type: 3}
+  sourceData:
+    mixerGroup: {fileID: 5184525896010364910, guid: 8b8890aca5ade7749950da227e5e5b67, type: 2}
+    ignoreEffects: 0
+    ignoreListenerEffects: 0
+    ignoreReverbZones: 0
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0.25
+    reverbZoneMix: 1

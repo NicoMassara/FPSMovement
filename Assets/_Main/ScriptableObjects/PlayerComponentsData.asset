@@ -16,36 +16,24 @@ MonoBehaviour:
     whatIsGround:
       serializedVersion: 2
       m_Bits: 128
+    groundCheckDistance: 1
+    groundCheckDistanceInAir: 0.25
     maxGroundSpeed: 10
-    maxAirSpeed: 8
     sprintSpeedModifier: 2
+    movementSharpnessOnGround: 15
+    maxAirSpeed: 5
+    accelerationSpeedInAir: 25
     jumpForce: 10
-    rotationSpeed: 20
+    jumpGroundingPreventionTime: 0.2
   cameraData:
     startFov: 60
-    sprintFov: 70
-    moveAngle: 5
+    sprintFov: 75
     transitionTime: 15
     restitutionTime: 25
-  bobData:
-    bobSharpness: 10
-    bobFrequency: 10
-    defaultBobAmount: 5
-    alternativeBobAmount: 2
-  swayData:
-    amount: 17
-    smoothDamp: 7
-    resetSmoothing: 5
-    clampX: 4
-    clampY: 4
-  recoilData:
-    force: 1
-    maxDistance: 5
-    sharpness: 50
-    restitutionSharpness: 10
   jetpackData:
-    acceleration: 50
-    consumeDuration: 1.5
+    acceleration: 10
+    consumeDuration: 5
     refillDuration: 2
     downwardVelocityCancelingFactor: 1
     refillDelay: 1
+  cameraForceAtGroundImpact: 15
